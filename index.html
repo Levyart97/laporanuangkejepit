@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -43,6 +44,7 @@
             box-sizing: border-box;
         }
     </style>
+    <script src="wsid-mapping.js"></script>
 </head>
 <body>
     <h2>Form Laporan Uang Kejepit</h2>
@@ -51,10 +53,10 @@
         <input type="text" name="noAmplop">
 
         <label>WSID:</label>
-        <input type="text" name="wsid">
+        <input type="text" name="wsid" id="wsid">
 
         <label>Lokasi:</label>
-        <input type="text" name="lokasi">
+        <input type="text" name="lokasi" id="lokasi" readonly>
 
         <label>Tgl Bongkar:</label>
         <input type="date" name="tglBongkar">
@@ -96,6 +98,12 @@
     </div>
 
     <script>
+        document.getElementById("wsid").addEventListener("input", function () {
+            const wsid = this.value.trim().toUpperCase();
+            const lokasi = wsidToLokasi[wsid] || "";
+            document.getElementById("lokasi").value = lokasi;
+        });
+
         document.getElementById("formLaporan").addEventListener("submit", function(e) {
             e.preventDefault();
             const data = new FormData(this);
